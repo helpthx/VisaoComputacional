@@ -3,12 +3,8 @@ Capture multiple Faces from multiple users to be stored on a DataBase (dataset d
     ==> Faces will be stored on a directory: dataset/ (if does not exist, pls create one)
     ==> Each face will have a unique numeric integer ID linked with a SQLite3 database call Banco_de_dados.db
     ==> Each ID has a name, matricula, amount of credit in RU and acessos.
-
-
-Based on original code by Anirban Kar: https://github.com/thecodacus/Face-Recognition    
-
-Developed by João Vitor Rodrigues Baptista. 
-
+Based on original code by Anirban Kar: https://github.com/thecodacus/Face-Recognition
+Developed by João Vitor Rodrigues Baptista.
 '''
 
 import cv2
@@ -17,18 +13,21 @@ import sqlite3
 
 '''
 ==> Path to convert the database in lists, cos we need a list's ID to link the database and the dataset.
-
 '''
 
 id_list = []
 name_list = []
 id_number_list = []
+
 conn = sqlite3.connect('Banco_de_dados.db')
 print ('\nDatabase open successfully...')
 
-cursor = conn.execute("SELECT ID_NUMBER from REGISTER")
+cursor = conn.execute("SELECT ID, NAME, ID_NUMBER from REGISTER")
 for row in cursor:
+    id_list.append(int(row[0]))
+    name_list.append(row[1])
     id_number_list.append(int(row[2]))
+
 
 
 print("Changed successfully...")
@@ -59,7 +58,7 @@ while(True):
 
     for (x,y,w,h) in faces:
 
-        cv2.rectangle(img, (x,y), (x+w,y+h), (255,0,0), 2)     
+        cv2.rectangle(img, (x,y), (x+w,y+h), (255,0,0), 2)
         count += 1
 
         # Save the captured image into the datasets folder
@@ -77,5 +76,3 @@ while(True):
 print("\n[INFO]Done")
 cam.release()
 cv2.destroyAllWindows()
-
-
