@@ -23,18 +23,12 @@ import sqlite3
 id_list = []
 name_list = []
 id_number_list = []
-money_list = []
-acess_list = []
 conn = sqlite3.connect('Banco_de_dados.db')
 print ('\nDatabase open successfully...')
 
-cursor = conn.execute("SELECT ID, NAME, ID_NUMBER, MONEY, ACCESS from REGISTER")
+cursor = conn.execute("SELECT ID_NUMBER from REGISTER")
 for row in cursor:
-    id_list.append(int(row[0]))
-    name_list.append(row[1])
     id_number_list.append(int(row[2]))
-    money_list.append(float(row[3]))
-    acess_list.append(int(row[4]))
 
 
 print("Changed successfully...")
